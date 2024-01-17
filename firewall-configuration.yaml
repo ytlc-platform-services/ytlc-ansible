@@ -1,0 +1,23 @@
+---
+- name: Configure Ubuntu Firewall
+  hosts: langkawi
+  become: yes
+  gather_facts: true
+
+  tasks:
+    - name: Install UFW
+      ansible.builtin.apt:
+        name: ufw
+        state: present
+
+    - name: Allow incoming ports
+      ufw:
+        rule: allow
+        port: 22
+
+    - name: Enable UFW
+      ufw:
+        state: enabled
+
+    - name: Reload UFW
+      command: ufw reload

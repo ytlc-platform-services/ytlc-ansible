@@ -1,0 +1,61 @@
+---
+- name: Prerequisite for Ubuntu Servers
+  hosts: langkawi
+  become: yes
+  gather_facts: true
+
+  vars_files:
+    - /etc/ansible/vaults/ad-credential.yaml
+
+  tasks:
+    - name: Configure timezone
+      ansible.builtin.shell:
+        cmd: timedatectl set-timezone Asia/Kuala_Lumpur
+
+    - name: Enable ubuntu firewall and allow port
+      ansible.builtin.apt:
+        name: ufw
+        state: present
+      ufw:
+        rule: allow
+        port: 22/tcp
+        state: enabled
+      command: ufw reload
+
+    - name: Update and upgrade OS patch
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: full
+
+    - name: Install required packages for Ubuntu Join AD Domain
+      ansible.builtin.apt:
+        name:
+          - realmd
+          - sssd
+          - samba-common
+          - samba-common-bin
+        state: present
+        
+    - name: Discover YTL domain
+      ansible.builtin.command:
+        cmd: realm discover ytlcement.addc
+
+    - name: Join the Active Directory domain
+      ansible.builtin.expec: 
+        command: realm join -U "{{ username }}" ytlcement.addc
+        Password for svcDomJoin: "{{ password }}"
+      args:
+        creates: /etc/krb5.keytab
+      environment:
+        REALM_JOIN_PASSWORD: "{{ password }}"
+      notify: restart sssd
+
+  handlers:
+    - name: restart sssd
+      service:
+        name: sssd
+        state: restarted
+
+ 
+
+ 
