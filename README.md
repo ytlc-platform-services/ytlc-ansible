@@ -1,5 +1,5 @@
 # ytlc-ansible
-
+ansible master: MYSSSVMENLP02 
 ansible folder: /etc/ansible
 
 1. run the playbook
