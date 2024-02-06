@@ -1,0 +1,27 @@
+- name: Install WINRM on Remote Windows Server
+  hosts: all
+  connection: local
+
+  tasks:
+    - debug: msg=test
+
+    - name: Include Ansible vault file for connection_username password
+      include_vars: /etc/ansible/vaults/windows-password.yaml
+
+    - name: Download and run ConfigureRemotingForAnsible.ps1 to setup WinRM
+      community.windows.psexec:
+        hostname: windows server IP
+        port: 445
+        connection_username: username@ytlc.cement #can use local admin account or AD admin account
+        connection_password: "{{ username_password }}"
+        executable: powershell.exe
+        arguments: '-'
+        stdin: |
+         [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 $url = "https://raw.githubusercontent.com/jborean93/ansible-windows/master/scripts/Upgrade-PowerShell.ps1" $file = "$env:temp\Upgrade-PowerShell.ps1" $username = "{{ username }}" $password = "{{ username_password }}" (New-Object -TypeName System.Net.WebClient).DownloadFile($url, $file) Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Force &$file -Version 5.1 -Username $username -Password $password exit
+         
+      delegate_to: localhost
+      register: results
+
+    - name: Print results
+      ansible.builtin.debug:
+        var: results

@@ -1,0 +1,18 @@
+---
+- name: Run Command On Windows Server Without WINRM setup
+  hosts: windows
+  become: yes  # Run tasks with elevated privileges on Windows
+
+  tasks:
+    - name: Run a CMD command
+      community.windows.psexec:
+        hostname: Server IP
+        connection_username: YodaWisdom@universe.starwars
+        connection_password: Cyberark1
+        executable: cmd.exe
+        arguments: /c echo Hello World
+      register: results
+
+    - name: Print results
+      ansible.builtin.debug:
+        var: results
