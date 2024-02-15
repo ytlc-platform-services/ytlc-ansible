@@ -1,0 +1,51 @@
+[ubuntu:env]
+ansible_user=svcAnsible
+ansible_connection=ssh
+
+[ubuntu]
+# Menara Production 
+MYSSSVMENLP01 ansible_host=10.22.9.26
+MYSSSVMENLP02 ansible_host=10.22.9.29
+MYSSSVMENLP03 ansible_host=10.22.9.30
+MYSSSVMENLP04 ansible_host=10.22.9.31
+
+# Menara Development
+MYSSSVMENLD03 ansible_host=10.22.6.11
+MYSSSVMENLD04 ansible_host=10.22.6.12
+MYSSSVMENLD05 ansible_host=10.22.6.13
+
+# Wisma Production
+MYSSSVWISLP01 ansible_host=10.205.52.25
+MYSSSVWISLP02 ansible_host=10.205.52.29
+MYSSSVWISLP03 ansible_host=10.205.52.30
+MYSSSVWISLP04 ansible_host=10.205.52.31
+
+# Wisma Development
+MYSSSVWISLD02 ansible_host=10.205.54.12
+MYSSSVWISLD03 ansible_host=10.205.54.13
+MYSSSVWISLD04 ansible_host=10.205.54.14
+
+# Langkawi Site
+MYSSSVLKWLP01 ansible_host=10.60.1.25
+MYSSSVLKWLP02 ansible_host=10.60.1.26
+
+# Padang Rengas Site
+MYSSSVPRSLP01 ansible_host=10.60.9.25
+
+# Kanthan Site
+MYSSSVKTNLP01 ansible_host=10.60.17.25
+
+# Bukit Sagu Site
+MYSSSVBSGLP01 ansible_host=10.60.25.25
+
+# Pasir Gudang 2 Site
+MYSSSVPG2LP01 ansible_host=10.60.33.25
+MYSSSVPG2LP02 ansible_host=10.60.33.26
+
+[windows:env]
+ansible_winrm_server_cert_validation=ignore
+ansible_connection=winrm
+ansible_user=svcAnsible
+ansible_password= "{{ password }}"
+
+[windows]
