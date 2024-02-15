@@ -1,6 +1,9 @@
 # ytlc-ansible
-ansible master: MYSSSVMENLP02 
+ansible master: MYSSSVMENLP05 (10.22.9.33)
 ansible folder: /etc/ansible
+playbook folder: /etc/ansible/playbook
+inventory playbook: /etc/ansible/playbook
+script: /etc/ansible/script
 
 Windows Servers Prerequisites
 Windows Client Requirements: https://docs.ansible.com/ansible/latest/os_guide/windows_setup.html#host-requirements
@@ -12,13 +15,15 @@ Windows Client Requirements: https://docs.ansible.com/ansible/latest/os_guide/wi
    #ansible-playbook -i localhost, install-winrm.yaml
 
 Linux Clients
-1. run the playbook
+1. Run the bash script to copy ssh key to all clients. Change the clients value accordingly.
+   #/etc/ansible/script/ssh-copy-id.sh
+2. run the playbook
    #ansible-playbook -i hosts playbook.yaml
-2. run the playbook with vault file
+3. run the playbook with vault file
    #ansible-playbook -i hosts playbook.yaml --ask-vault-pass
-3. scan playbook for errors with ansible lint
+4. scan playbook for errors with ansible lint
    #ansible-lint playbook.yaml
-4. populate ansible secret
+5. populate ansible secret
    #vim secret.yaml
    username: admin
    password: passwrd
