@@ -1,0 +1,24 @@
+name: Install Cato Certificate in Ubuntu Servers
+hosts: all
+become: yes
+gather_facts: yes
+
+tasks:
+  
+  - name: Create Cato directory
+    ansible.builtin.file:
+    path: /usr/local/share/ca-certificates/Cato
+    state: directory
+    mode: '0755'
+
+  - name: Download Cato Cert
+    ansible.builtin.get_url:
+      url: https://myvpn.catonetworks.com/public/certificates/CatoNetworksTrustedRootCA.pem 
+      dest: /usr/local/share/ca-certificates/Cato
+
+  
+  - name: Convert Certicate into crt format and install cert
+    ansible.builtin.shell: |
+      openssl x509 -in CatoNetworksTrustedRootCA.pem -out CatoNetworksTrustedRootCA.crt
+      rm -rf CatoNetworksTrustedRootCA.pem
+      update-ca-certificates

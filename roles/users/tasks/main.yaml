@@ -1,0 +1,21 @@
+- name: Include vaults file
+  include_vars: /etc/ansible/vaults/new-password.yaml
+  vars: 
+    users_to_create:
+    - name: pfadm
+    - name: svcAnsible
+
+- name: Check if the user pfadm and svcAnsible already created
+  ansible.builtin.shell: id "{{ item.name }}"
+  loop: "{{ users_to_create }}"
+  register: user_check
+  ignore_errors: true
+
+- name: Create the users if they are not exists
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    state: present
+    password: "{{ new-password }}"
+    group: sudo
+  loop: "{{ users_to_create }}"
+  when: user_check.rc != 0
