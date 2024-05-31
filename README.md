@@ -1,3 +1,19 @@
+ytlc-playbook/
+├── ansible.cfg
+├── inventory
+├── playbook.yml
+├── roles/
+│ ├── patch/
+│ │ ├── tasks/
+│ │ │ └── main.yml
+│ │ ├── handlers/
+│ │ │ └── main.yml
+│ ├── pre-patch/
+│ │ ├── tasks/
+│ │ │ └── main.yml
+│ │ ├── handlers/
+│ │ │ └── main.yml
+
 
 ## Contents
 
