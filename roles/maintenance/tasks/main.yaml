@@ -21,3 +21,4 @@
       New password: "{{ rotation_password }}"
       Retype new password: "{{ rotation_password }}"
   with_items: "{{ user_list.stdout_lines }}"
+

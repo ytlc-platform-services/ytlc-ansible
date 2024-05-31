@@ -1,0 +1,5 @@
+---
+
+- name: post-reboot
+  debug:
+    msg: "System rebooted successfully"

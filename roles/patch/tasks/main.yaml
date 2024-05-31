@@ -1,0 +1,13 @@
+---
+- name: Restart after pre-patch
+  ansible.builtin.command: reboot
+  notify: post-reboot
+
+- name: Update latest patch
+  ansible.builtin.apt:
+    name: '*'
+    state: latest
+    update_cache: yes
+
+- name: Clean all apt cache
+  ansible.builtin.command: apt-get clean

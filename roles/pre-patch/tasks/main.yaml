@@ -1,0 +1,43 @@
+---
+- name: Check last reboot
+  ansible.builtin.command: uptime
+  register: uptime
+  notify: show uptime
+
+- name: Check space utilization
+  ansible.builtin.command: df -h
+  register: space_left
+  notify: show space utilization
+
+- name: Ensure NTP is installed
+  ansibile.builtin.apt:
+    name: ntp
+    state: present
+    update_cache: yes
+
+- name: Start and enable NTP service
+  ansible.builtin.systemd:
+    name: ntp
+    state: started
+    enabled: yes
+
+- name: Synchronize time with NTP server
+  ansible.builtin.command: ntpd -gq
+  notify: restart ntp
+
+- name: Ensure repository data is current
+  ansible.builtin.apt:
+    name: '*'
+    state: latest
+    update_cache: yes
+
+- name: Clean all apt cache
+  ansible.builtin.command: apt-get clean
+
+- name: Ensure FSTAB data is clean
+  anibsle.builtin.shell: |
+    cp /etc/fstab /etc/fstab.bak
+    awk '!seen[$0]++' /etc/fstab > /etc/fstab.tmp && mv /etc/fstab.tmp /etc/fstab
+  notify: reload fstab
+
+

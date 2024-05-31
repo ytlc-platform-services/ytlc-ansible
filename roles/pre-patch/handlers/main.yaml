@@ -1,0 +1,17 @@
+---
+- name: restart ntp
+  ansible.builtin.systemd:
+    name: ntp
+    state: restarted
+
+- name: reload fstab
+  ansible.builtin.command: mount -a
+
+- name: show uptime
+  ansible.builtin.debug:
+    msg: "Machine uptime: {{ uptime.stdout_lines }}"
+
+- name: show space utilization
+  ansible.builtin.debug:
+    msg: "Current usage for {{ ansible.host }} is {{ space_left }}" ##buat loop untuk show all hosts space usage
+
