@@ -1,5 +1,4 @@
----
-host: ubuntu
-roles:
-- ping
-
+- hosts: ubuntu
+  become: true
+  roles:
+    - ping
