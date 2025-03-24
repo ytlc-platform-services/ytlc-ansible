@@ -1,4 +1,8 @@
-- hosts: ubuntu
-  become: true
-  roles:
-    - ping
+---
+- name: Test connection to remote host
+  hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: Ping the host
+      ansible.builtin.ping:
