@@ -1,0 +1,4 @@
+---
+
+- name: Get local user
+  ansible.builtin.command: cat /etc/passwd
