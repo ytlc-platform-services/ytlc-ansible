@@ -1,4 +1,11 @@
 ---
 
-- name: Get local user
-  ansible.builtin.command: cat /etc/passwd
+- name: Get list of local users from /etc/passwd
+  ansible.builtin.shell: |
+        awk -F: '$3 >= 1000 && $3 != 65534 {print $1}' /etc/passwd
+  register: local_users
+
+
+- name: List down all local users
+  ansible.builtin.debug:
+    msg: "{{ local_users.stdout_lines }}"
