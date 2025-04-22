@@ -20,7 +20,7 @@
     update-ca-certificates
   
 #Block2: Install Wazuh Agent in Ubuntu Servers  
-- name: Install Wazuh Agent in Ubuntu Servers
+- name: Download Wazuh Agent in Ubuntu Servers
   ansible.builtin.get_url:
     url: <repo url>
     dest: /tmp
