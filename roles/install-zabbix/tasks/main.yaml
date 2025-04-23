@@ -7,11 +7,11 @@
 - name: Download Zabbix repo package
   ansible.builtin.get_url:
     url: wget https://repo.zabbix.com/zabbix/7.2/release/ubuntu/pool/main/z/zabbix-release/zabbix-release_latest_7.2+ubuntu24.04_all.deb
-    dest: /tmp
+    dest: /home/svcAnsible
     mode: '0775'
 
 - name: Install Zabbix repo package
-  ansible.builtin.command: dpkg -i /tmp/zabbix-release_latest_7.2+ubuntu24.04_all.deb
+  ansible.builtin.command: dpkg -i /home/svcAnsible/zabbix-release_latest_7.2+ubuntu24.04_all.deb
 
 - name: Update apt cache
   ansible.builtin.apt:
