@@ -1,0 +1,9 @@
+---
+
+- name: Remove Zabbix Agent 2
+  hosts: all
+  become: true
+  roles:
+    - remove-zabbix
+
+

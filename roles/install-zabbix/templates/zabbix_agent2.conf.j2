@@ -1,14 +1,36 @@
 # Zabbix Agent 2 configuration file
 
-Server={{ zabbix_server }}
-ServerActive={{ zabbix_server }}
+Server=10.51.0.6
+ServerActive=10.51.0.6
 Hostname={{ inventory_hostname }}
 
 # Optional: Log file location
 LogFile=/var/log/zabbix/zabbix_agent2.log
 
+# Optional: Log file size (in MB)
+LogFileSize=10
+
 # Optional: PID file location
 PidFile=/var/run/zabbix/zabbix_agent2.pid
 
+# Optional: Debug level (0-5, default: 3)
+DebugLevel=3
+
+# Optional: Timeout for processing checks (in seconds)
+Timeout=30
+
+# Optional: Buffer size for active checks
+BufferSend=5
+BufferSize=100
+
+# Optional: Maximum number of parallel checks
+StartAgents=3
+
 # Optional: Include additional configuration files
-# Include=/etc/zabbix/zabbix_agent2.d/*.conf
+Include=/etc/zabbix/zabbix_agent2.d/*.conf
+
+# Optional: Enable TLS encryption (if applicable)
+# TLSConnect=psk
+# TLSAccept=psk
+# TLSPSKIdentity=YourPSKIdentity
+# TLSPSKFile=/etc/zabbix/zabbix_agent2.psk
