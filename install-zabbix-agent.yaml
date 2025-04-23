@@ -1,0 +1,14 @@
+---
+
+- name: Apply Zabbix Agent 2 Role
+  hosts: all
+  become: true
+  roles:
+    - install-zabbix
+
+
+  handlers:
+    - name: Restart Zabbix Agent
+      ansible.builtin.systemd:
+        name: zabbix-agent
+        state: restarted
