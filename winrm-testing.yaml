@@ -1,0 +1,6 @@
+---
+- name: Test WinRM connection
+  hosts: windows
+  tasks:
+    - name: Get uptime
+      win_command: systeminfo | find "System Boot Time"
