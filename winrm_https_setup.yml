@@ -1,0 +1,22 @@
+---
+- name: Enable WinRM over HTTPS for Ansible
+  hosts: windows_initial
+  gather_facts: no
+  tasks:
+    - name: Download ConfigureRemotingForAnsible.ps1
+      win_shell: |
+        Invoke-WebRequest -Uri "https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1" -OutFile "C:\ConfigureRemotingForAnsible.ps1"
+      args:
+        executable: powershell
+
+    - name: Run ConfigureRemotingForAnsible.ps1 with HTTPS
+      win_shell: |
+        powershell.exe -ExecutionPolicy Bypass -File C:\ConfigureRemotingForAnsible.ps1 -ForceNewSSLCert
+      args:
+        executable: cmd
+
+    - name: Ensure WinRM service is running and set to auto
+      win_service:
+        name: WinRM
+        start_mode: auto
+        state: started
