@@ -1,1 +1,22 @@
+---
+
+- name: Download Crowdstrike Installer repo package
+  ansible.builtin.get_url:
+    url: http://10.22.9.33/ytlrepo/falcon-sensor_7.22.0-17507_amd64.deb
+    dest: /home/svc-ansible
+    mode: '0775'
+
+- name: Install Crowdstrike Installer repo package
+  ansible.builtin.command:  dpkg -i /home/svc-ansible/falcon-sensor_7.22.0-17507_amd64.deb
+
+- name: Enter Crowdstrike CID
+  ansible.builtin.command: /opt/CrowdStrike/falconctl -s --cid=7EB4D2467E9A4414A178CB61686B28E6-20
+ 
+- name: Restart and enable Crowdstrike Installer service
+  ansible.builtin.systemd:
+    name: falcon-sensor
+    state: restarted
+    enabled: true
+   
+
 
