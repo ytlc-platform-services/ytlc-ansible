@@ -1,0 +1,7 @@
+---
+
+- name: Apply Crowdstrike Linux Server Role
+  hosts: all
+  become: true
+  roles:
+    - install-crowdstrike
